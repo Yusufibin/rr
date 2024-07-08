@@ -1,0 +1,30 @@
+name: Rust Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-windows:
+    name: Build for Windows (x86_64-pc-windows-gnu)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install musl toolchain
+      run: |
+        rustup toolchain install stable-x86_64-pc-windows-gnu
+        rustup default stable-x86_64-pc-windows-gnu
+    - name: Build for release
+      run: cargo build --target x86_64-pc-windows-gnu --release
+    - name: Create Release Zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: windows-executable
+        path: target/x86_64-pc-windows-gnu/release/votre_nom_de_projet.exe # Remplacez par le nom de votre fichier .exe
+
+  # Vous pouvez ajouter d'autres jobs ici pour compiler pour d'autres plateformes si nécessaire (macOS, Linux). 
