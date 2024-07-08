@@ -17,7 +17,7 @@ jobs:
       - name: Compile and release
         uses: rust-build/rust-build.action@v1.4.5
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
+          GITHUB_TOKEN: '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'
         with:
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "README.md LICENSE"
